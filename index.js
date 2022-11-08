@@ -34,6 +34,14 @@ async function run() {
       res.send(services);
     })
 
+    //Get Service Data By Id from DataBase
+    app.get('/services/:id', async (req, res) => {
+      const id = req.params.id
+      const query = { _id: ObjectId(id) }
+      const service = await serviceCollection.findOne(query)
+      res.send(service)
+    })
+
   }
   finally {
 
