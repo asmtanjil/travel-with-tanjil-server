@@ -20,7 +20,7 @@ async function run() {
 
     const reviewCollection = client.db('travelWithTanjil').collection('reviews')
 
-    //Get Service Data From DataBase
+    //Get 3 Service Data From DataBase
     app.get('/homeServices', async (req, res) => {
       const query = {}
       const cursor = serviceCollection.find(query);
@@ -28,7 +28,7 @@ async function run() {
       res.send(services);
     })
 
-    //Get Service Data From DataBase
+    //Get All Service Data From DataBase
     app.get('/services', async (req, res) => {
       const query = {}
       const cursor = serviceCollection.find(query);
@@ -36,7 +36,7 @@ async function run() {
       res.send(services);
     })
 
-    //Get Service Data By Id from DataBase
+    //Get Specific Service Data By Id from DataBase
     app.get('/services/:id', async (req, res) => {
       const id = req.params.id
       const query = { _id: ObjectId(id) }
@@ -51,12 +51,27 @@ async function run() {
       res.send(result)
     })
 
-    //get reviews data from database and send to client site
+    //Get Specific Reviews Data from database and send to client site
+    app.get('/reviews/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { serviceId: id }
+      const result = await reviewCollection.findOne(query)
+      res.send(result)
+    })
+
+    //Get reviews data from database and send to client site
     app.get('/reviews', async (req, res) => {
       const query = {}
       const cursor = reviewCollection.find(query)
       const reviews = await cursor.toArray()
       res.send(reviews)
+    })
+
+    //Post Clients Service Data From Client to Database
+    app.post('/services', async (req, res) => {
+      const service = req.body;
+      const result = await serviceCollection.insertOne(service)
+      res.send(result)
     })
 
   }
