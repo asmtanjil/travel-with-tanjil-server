@@ -18,6 +18,8 @@ async function run() {
     //Collections
     const serviceCollection = client.db('travelWithTanjil').collection('services')
 
+    const reviewCollection = client.db('travelWithTanjil').collection('reviews')
+
     //Get Service Data From DataBase
     app.get('/homeServices', async (req, res) => {
       const query = {}
@@ -42,6 +44,13 @@ async function run() {
       res.send(service)
     })
 
+    //Post Review Data to Database
+    app.post('/reviews', async (req, res) => {
+      const review = req.body;
+      const result = await reviewCollection.insertOne(review)
+      res.send(result)
+    })
+
   }
   finally {
 
@@ -52,9 +61,9 @@ async function run() {
 run().catch(err => console.error(err))
 
 app.get('/', (req, res) => {
-  res.send('Altitude Trekker server is running')
+  res.send('Travel With Tanjil server is running')
 })
 
 app.listen(port, () => {
-  console.log(`Altitude Trekker server is running on: ${port}`)
+  console.log(`Travel With Tanjil server is running on: ${port}`)
 })
