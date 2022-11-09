@@ -51,6 +51,14 @@ async function run() {
       res.send(result)
     })
 
+    //get reviews data from database and send to client site
+    app.get('/reviews', async (req, res) => {
+      const query = {}
+      const cursor = reviewCollection.find(query)
+      const reviews = await cursor.toArray()
+      res.send(reviews)
+    })
+
   }
   finally {
 
