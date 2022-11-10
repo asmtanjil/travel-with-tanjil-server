@@ -131,7 +131,7 @@ async function run() {
     app.patch('/reviews/:id', async (req, res) => {
       const id = req.params.id;
       // console.log(id)
-      const query = { service: id }
+      const query = { _id: ObjectId(id) }
       const result = await reviewCollection.updateOne(query, {
         $set: req.body
       })
@@ -144,7 +144,6 @@ async function run() {
   finally {
 
   }
-
 }
 
 run().catch(err => console.error(err))
