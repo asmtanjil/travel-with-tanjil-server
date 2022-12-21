@@ -135,7 +135,7 @@ async function run() {
       const result = await reviewCollection.updateOne(query, {
         $set: req.body
       })
-      if (result.matchedCount) {
+      if (result.modifiedCount) {
         res.send(result)
       }
     })
